@@ -1,5 +1,14 @@
+.title{
+  background-color: rgb(117, 162, 163);
+}
+
+
 .App {
   text-align: center;
+}
+
+a{
+  color: white !important;
 }
 
 .App-logo {

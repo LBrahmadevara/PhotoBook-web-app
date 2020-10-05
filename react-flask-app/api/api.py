@@ -9,9 +9,13 @@ app = Flask(__name__)
 CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 
+
 @app.route('/upload', methods=['POST'])
 def upload():
-    uploaded_file=request.files.get('file')
+    uploaded_file = request.files.get('file')
+    name = request.form.get('name')
+    loc = request.form.get('loc')
+    date = request.form.get('date')
 
     # Instantiates a client
     vision_client = vision.ImageAnnotatorClient()
@@ -47,9 +51,11 @@ def upload():
         print(label.description)
     # print(len(labels))
 
-    return blob.public_url
+    return {'url':blob.public_url}
 
-# @app.route('/time')
+
+# @app.route('/time', methods=['POST'])
 # def get_current_time():
-#     return {'time': time.time()}
-
+#     a = request.get_json()['x']
+#     # print(a)
+#     return {'time': time.time(), 'a':a}

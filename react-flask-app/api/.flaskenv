@@ -2,3 +2,4 @@ FLASK_APP=api.py
 FLASK_ENV=development
 CLOUD_STORAGE_BUCKET=robotic-charmer-291501
 GOOGLE_APPLICATION_CREDENTIALS=./venv/VisionAPI_ServiceKey.json
+CLOUD_PROJECT=robotic-charmer-291501

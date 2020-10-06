@@ -30,7 +30,7 @@ const Upload = () => {
       })
       .then((res) => {
         console.log(res.data);
-        if (res.data.url.length > 0) {
+        if (res.data.response.length > 0) {
           setMsg("Successfully uploaded");
           setName("");
           setLoc("");

@@ -4,6 +4,7 @@ import os
 from google.cloud import storage
 from google.cloud import vision
 from google.cloud import datastore
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -64,9 +65,7 @@ def upload():
         else:
             category='Others'
             break
-
-    # if 'Human' in labels.description:
-        # print("True")
+    print(category)
 
     datastore_client = datastore.Client(CLOUD_PROJECT)
     key = datastore_client.key('Photo Book')
@@ -83,7 +82,9 @@ def upload():
 
     # to retrieve the data from datastore
     query = datastore_client.query(kind='Photo Book')
+    # query.add_filter('category','=','Others')
     res = list(query.fetch())
+    # print(res)
 
     return {'response':res}
 

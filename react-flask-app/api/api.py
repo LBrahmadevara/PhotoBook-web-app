@@ -49,10 +49,24 @@ def upload():
     # Performs label detection on the image file
     labels = vision_client.label_detection(image=image).label_annotations
 
-    # print('Labels:')
-    # for label in labels:
-    #     print(label.description)
-    # print(len(labels))
+    category=''
+    for label in labels:
+        print(label.description)
+        if 'human' == label.description.lower():
+            category = 'Human'
+            break
+        elif ('dog' == label.description.lower()) or ('cat' == label.description.lower()) or ('mammal' == label.description.lower()):
+            category = 'Animal'
+            break
+        elif 'flower' == label.description.lower():
+            category='Flower'
+            break
+        else:
+            category='Others'
+            break
+
+    # if 'Human' in labels.description:
+        # print("True")
 
     datastore_client = datastore.Client(CLOUD_PROJECT)
     key = datastore_client.key('Photo Book')
@@ -61,7 +75,8 @@ def upload():
         'name': name,
         'location': loc,
         'date':date,
-        'url': url
+        'url': url,
+        'category': category
     })
 
     datastore_client.put(entity)

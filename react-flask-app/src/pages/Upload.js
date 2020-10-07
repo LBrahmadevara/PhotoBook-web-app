@@ -10,33 +10,30 @@ import {
 } from "@material-ui/pickers";
 import "../App.css";
 
+const FlakeIdGen = require("flake-idgen");
+const intformat = require("biguint-format");
+const id = new FlakeIdGen().next();
+
 const Upload = () => {
   let [file, setFile] = useState("");
   let [msg, setMsg] = useState("");
   let [name, setName] = useState("");
   let [loc, setLoc] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  // const Bu = () => {
-  //   // axios.get("/time").then((res) => console.log(res.data.time));
-  //   let body={
-  //     'x': 'x'
-  //   }
-  //   axios.post('/time', body)
-  //   .then(res => console.log(res.data))
-  // }
-
-
   const API = () => {
     let form_data = new FormData();
     form_data.append("file", file);
+    form_data.append("id", intformat(id, "dec"));
     form_data.append("name", name);
     form_data.append("loc", loc);
-    form_data.append("date", new Intl.DateTimeFormat("en-US",{
-      year:"numeric",
-      month: "short",
-      day: "2-digit"
-    }).format(selectedDate));
+    form_data.append(
+      "date",
+      new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }).format(selectedDate)
+    );
     axios
       .post("/upload", form_data, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -59,17 +56,6 @@ const Upload = () => {
   };
   return (
     <div className="d-flex justify-content-center mt-4">
-      {/* <form method="POST" action="/upload" encType="multipart/form-data">
-        <input type="file" name="file" className="mt-4" /> */}
-      {/* <input type="submit" className="mt-4 ml-4" /> */}
-      {/* <Button
-            color="primary"
-            variant="contained"
-            type="submit"
-          >
-            Upload
-          </Button>
-      </form> */}
       <div className="d-flex flex-column">
         <form className="mt-4">
           <div className="mt-3">
@@ -111,7 +97,7 @@ const Upload = () => {
                   id="date"
                   label="Date"
                   value={selectedDate}
-                  onChange={e => setSelectedDate(e)}
+                  onChange={(e) => setSelectedDate(e)}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}

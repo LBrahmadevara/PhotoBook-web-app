@@ -8,7 +8,7 @@ const PhotoBookTemplate = (props) => {
       <div className="row">
         {props.categories.map((value, index) => (
           <div className="col" key={index}>
-            <PhotoCard category={value} />
+            <PhotoCard categories={value} />
           </div>
         ))}
       </div>

@@ -21,6 +21,7 @@ def upload():
     name = request.form.get('name')
     loc = request.form.get('loc')
     date = request.form.get('date')
+    id = request.form.get('id')
 
     # Instantiates a client
     vision_client = vision.ImageAnnotatorClient()
@@ -52,7 +53,7 @@ def upload():
     # Performs label detection on the image file
     labels = vision_client.label_detection(image=image).label_annotations
 
-    category=''
+    category = ''
     for label in labels:
         print(label.description)
         if 'human' == label.description.lower():
@@ -62,54 +63,50 @@ def upload():
             category = 'Animal'
             break
         elif 'flower' == label.description.lower():
-            category='Flower'
+            category = 'Flower'
             break
         else:
-            category='Others'
+            category = 'Others'
             # break
     print(category)
 
-    # datastore_client = datastore.Client(CLOUD_PROJECT)
-    key = datastore_client.key('Photo Book')
+    key = datastore_client.key('Photo Book', id)
     entity = datastore.Entity(key=key)
     entity.update({
         'name': name,
         'location': loc,
-        'date':date,
+        'date': date,
         'url': url,
-        'category': category
+        'category': category,
+        'id': id
     })
 
     datastore_client.put(entity)
 
-    # to retrieve the data from datastore
-    query = datastore_client.query(kind='Photo Book')
-    # query.add_filter('category','=','Others')
-    res = list(query.fetch())
-    # print(res)
-
-    return {'response':res}
+    return {'response': 'res'}
 
 
 @app.route('/all')
 def all_categories():
     query = datastore_client.query(kind='Photo Book')
     res = list(query.fetch())
-    print(res[0].__dict__)
-    print(res)
     return {'response': res}
 
 
-# @app.route('/labels', methods=['POST'])
-# def categories():
-#     key = datastore_client.key('Photo Book')
-#     task = datastore_client.getkey()
-#     print(type(task[0]))
-#     print(task)
-#     return {'response':task}
+@app.route('/edit', methods=['POST'])
+def edit():
+    id = request.get_json()['id']
+    query = datastore_client.query(kind='Photo Book')
+    query.add_filter('id', '=', id)
+    res = list(query.fetch())
+    return {'response': res}
 
-# @app.route('/time', methods=['POST'])
-# def get_current_time():
-#     a = request.get_json()['x']
-#     # print(a)
-#     return {'time': time.time(), 'a':a}
+
+@app.route('/labels', methods=['POST'])
+def categories():
+    label = request.get_json()['label']
+    query = datastore_client.query(kind='Photo Book')
+    query.add_filter('category', '=', label)
+    res = list(query.fetch())
+    return {'response': res}
+

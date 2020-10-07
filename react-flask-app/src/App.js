@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Upload from "./pages/Upload";
 import PhotoBook from "./pages/PhotoBook";
-import PhotoCard from "./pages/PhotoCard";
-import PhotoBookTemplate from "./pages/PhotoBookTemplate";
+import Modify from "./pages/Modify";
 
 function App() {
   return (
@@ -20,6 +19,7 @@ function App() {
         </div>
         <Switch>
           <Route path="/upload" component={Upload} />
+          <Route path="/edit/:id" component={Modify} />
           <Route path="/" component={PhotoBook} />
         </Switch>
       </Router>

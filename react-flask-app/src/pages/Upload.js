@@ -15,7 +15,6 @@ const Upload = () => {
   let [msg, setMsg] = useState("");
   let [name, setName] = useState("");
   let [loc, setLoc] = useState("");
-  let [date, setDate] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   // const Bu = () => {
@@ -33,7 +32,6 @@ const Upload = () => {
     form_data.append("file", file);
     form_data.append("name", name);
     form_data.append("loc", loc);
-    // form_data.append("date", selectedDate.toLocaleDateString());
     form_data.append("date", new Intl.DateTimeFormat("en-US",{
       year:"numeric",
       month: "short",
@@ -49,8 +47,6 @@ const Upload = () => {
           setMsg("Successfully uploaded");
           setName("");
           setLoc("");
-          // setDate("");
-          // setSelectedDate("");
         }
       });
   };

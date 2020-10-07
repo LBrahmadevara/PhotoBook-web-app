@@ -12,6 +12,8 @@ CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 CLOUD_PROJECT = os.environ['CLOUD_PROJECT']
 
+datastore_client = datastore.Client(CLOUD_PROJECT)
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -64,10 +66,10 @@ def upload():
             break
         else:
             category='Others'
-            break
+            # break
     print(category)
 
-    datastore_client = datastore.Client(CLOUD_PROJECT)
+    # datastore_client = datastore.Client(CLOUD_PROJECT)
     key = datastore_client.key('Photo Book')
     entity = datastore.Entity(key=key)
     entity.update({
@@ -89,6 +91,22 @@ def upload():
     return {'response':res}
 
 
+@app.route('/all')
+def all_categories():
+    query = datastore_client.query(kind='Photo Book')
+    res = list(query.fetch())
+    print(res[0].__dict__)
+    print(res)
+    return {'response': res}
+
+
+# @app.route('/labels', methods=['POST'])
+# def categories():
+#     key = datastore_client.key('Photo Book')
+#     task = datastore_client.getkey()
+#     print(type(task[0]))
+#     print(task)
+#     return {'response':task}
 
 # @app.route('/time', methods=['POST'])
 # def get_current_time():

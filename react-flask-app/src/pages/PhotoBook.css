@@ -14,6 +14,17 @@
   padding-top: 0% !important;
 }
 
+/* min_h : 315
+w 250 */
+
+.update-image{
+  min-height: 315px;
+  min-width: 350px;
+  max-width: 350px;
+  max-height: 315px;
+  border-radius: 5px 35px;
+}
+
 .MuiCardContent-root {
   padding-top: 5px !important;
   padding-left: 0% !important;
@@ -21,11 +32,31 @@
   padding-right: 0% !important;
 }
 
+.MuiInputLabel-root {
+  display: flex !important;
+}
+
+.MuiInputBase-input{
+  display: flex !important
+}
+
+.MuiSelect-select {
+  min-width: 325px !important;
+}
+
 .card-details {
   font-family: system-ui !important;
   font-size: small;
   font-weight: 500;
   text-transform: none !important;
+}
+
+.spinner-head {
+  min-height: 500px;
+}
+
+.photo-book{
+  min-width: 900px;
 }
 
 .img-thumbnail {

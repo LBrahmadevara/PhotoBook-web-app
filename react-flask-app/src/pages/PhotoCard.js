@@ -17,7 +17,7 @@ const PhotoCard = (props) => {
           <div className="image-url">
             <img
               src={props.categories.url}
-              alt="No-Image"
+              alt="No picture"
               className="img-thumbnail"
             />
           </div>
@@ -34,7 +34,7 @@ const PhotoCard = (props) => {
               <div>
                 <Icon icon="locate" intent="success" />
               </div>
-              <div className="card-details ml-2">
+              <div className="card-details mt-1 ml-2">
                 Place: {props.categories.location}
               </div>
             </div>
@@ -42,7 +42,7 @@ const PhotoCard = (props) => {
               <div>
                 <Icon icon="calendar" intent="success" />
               </div>
-              <div className="card-details ml-2">
+              <div className="card-details mt-1 ml-2">
                 Date: {props.categories.date}
               </div>
             </div>
@@ -50,7 +50,7 @@ const PhotoCard = (props) => {
               <div>
                 <Icon icon="tag" intent="success" />
               </div>
-              <div className="card-details ml-2">
+              <div className="card-details mt-1 ml-2">
                 Label: {props.categories.category}
               </div>
             </div>

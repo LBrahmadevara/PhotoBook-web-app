@@ -9,6 +9,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import "../App.css";
+import { Spinner } from "@blueprintjs/core";
 
 const FlakeIdGen = require("flake-idgen");
 const intformat = require("biguint-format");
@@ -19,6 +20,7 @@ const Upload = () => {
   let [msg, setMsg] = useState("");
   let [name, setName] = useState("");
   let [loc, setLoc] = useState("");
+  let [spin, setSpin] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const API = () => {
     let form_data = new FormData();
@@ -26,6 +28,7 @@ const Upload = () => {
     form_data.append("id", intformat(id, "dec"));
     form_data.append("name", name);
     form_data.append("loc", loc);
+    form_data.append('fileChanged','true');
     form_data.append(
       "date",
       new Intl.DateTimeFormat("en-US", {
@@ -39,8 +42,8 @@ const Upload = () => {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.response.length > 0) {
+          setSpin(false);
           setMsg("Successfully uploaded");
           setName("");
           setLoc("");
@@ -52,6 +55,7 @@ const Upload = () => {
     setFile(e.target.files[0]);
   };
   const uploadButton = () => {
+    setSpin(true);
     API();
   };
   return (
@@ -115,7 +119,8 @@ const Upload = () => {
             {/* <Button onClick={Bu}>Time</Button> */}
           </div>
         </form>
-        <div className="mt-4">{msg}</div>
+        {spin ? <Spinner className="mt-3" size='40' intent='success' /> :
+        <div className="mt-4">{msg}</div>}
       </div>
     </div>
   );

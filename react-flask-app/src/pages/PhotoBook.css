@@ -1,43 +1,73 @@
-.MuiButton-root {
-    text-transform: none !important;
-    font-family: system-ui !important;
-    justify-content: flex-start !important;
-    min-width: 150px !important;
+.category-button {
+  text-transform: none !important;
+  font-family: system-ui !important;
+  justify-content: flex-start !important;
+  min-width: 150px !important;
 }
 
-.MuiCard-root{
-    width: 250px;
-    /* height: 300px; */
+.MuiCard-root {
+  width: 250px;
 }
 
-.MuiCardContent-root:last-child{
-    padding-bottom: 0% !important;
-    padding-top: 0% !important;
+.MuiCardContent-root:last-child {
+  padding-bottom: 0% !important;
+  padding-top: 0% !important;
 }
 
-.MuiCardContent-root{
-    padding-top: 5px !important;
-    padding-left: 0% !important;
-    padding-bottom: 0% !important;
-    padding-right: 0% !important;
+/* min_h : 315
+w 250 */
+
+.update-image{
+  min-height: 315px;
+  min-width: 350px;
+  max-width: 350px;
+  max-height: 315px;
+  border-radius: 5px 35px;
 }
 
-.card-details{
-    font-family: system-ui !important;
-    font-size: small;
-    font-weight: 500;
-    text-transform: none !important;
+.MuiCardContent-root {
+  padding-top: 5px !important;
+  padding-left: 0% !important;
+  padding-bottom: 0% !important;
+  padding-right: 0% !important;
 }
 
-.img-thumbnail{
-    padding: 0% !important;
-    max-width: 250px !important;
-    max-height: 250px !important;
-    min-width: 250px !important;
-    min-height: 250px !important;
+.MuiInputLabel-root {
+  display: flex !important;
 }
 
-.image-url{
-    max-width: 250px;
-    max-height: 250px;
+.MuiInputBase-input{
+  display: flex !important
+}
+
+.MuiSelect-select {
+  min-width: 325px !important;
+}
+
+.card-details {
+  font-family: system-ui !important;
+  font-size: small;
+  font-weight: 500;
+  text-transform: none !important;
+}
+
+.spinner-head {
+  min-height: 500px;
+}
+
+.photo-book{
+  min-width: 900px;
+}
+
+.img-thumbnail {
+  padding: 0% !important;
+  max-width: 250px !important;
+  max-height: 250px !important;
+  min-width: 250px !important;
+  min-height: 250px !important;
+}
+
+.image-url {
+  max-width: 250px;
+  max-height: 250px;
 }

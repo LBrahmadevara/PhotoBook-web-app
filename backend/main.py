@@ -8,12 +8,15 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
-Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
-CLOUD_PROJECT = os.environ['CLOUD_PROJECT']
+CLOUD_STORAGE_BUCKET = "robotic-charmer-291501"
+# Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+CLOUD_PROJECT = "robotic-charmer-291501"
 
 datastore_client = datastore.Client(CLOUD_PROJECT)
 
+@app.route('/')
+def main():
+    return "main"
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -172,3 +175,7 @@ def categories():
     query.add_filter('category', '=', label)
     res = list(query.fetch())
     return {'response': res}
+
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)

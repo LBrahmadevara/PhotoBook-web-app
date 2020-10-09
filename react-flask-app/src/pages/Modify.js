@@ -32,7 +32,7 @@ const Modify = (props) => {
     let body = {
       id: props.match.params.id,
     };
-    axios.post("/edit", body).then((res) => {
+    axios.post("https://robotic-charmer-291501.wl.r.appspot.com/edit", body).then((res) => {
       setFile(res.data.response[0]["url"]);
       setLabel(res.data.response[0]["category"]);
       setName(res.data.response[0]["name"]);
@@ -73,7 +73,7 @@ const Modify = (props) => {
     }
     console.log(render)
     axios
-      .post("/upload", form_data, {
+      .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

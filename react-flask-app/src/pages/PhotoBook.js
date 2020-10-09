@@ -14,7 +14,7 @@ const PhotoBook = () => {
   }, []);
 
   const fetch_api = async () => {
-    await axios.get("/all").then((res) => {
+    await axios.get("https://robotic-charmer-291501.wl.r.appspot.com/all").then((res) => {
       setCategories(res.data.response);
       setLoadingState(true);
     });
@@ -28,7 +28,7 @@ const PhotoBook = () => {
     const body = {
       label: e.currentTarget.value,
     };
-    axios.post("/labels", body).then((res) => {
+    axios.post("https://robotic-charmer-291501.wl.r.appspot.com/labels", body).then((res) => {
       setCategories(res.data.response);
       if (res.data.response.length === 0) {
         setEmptyCheck("empty");

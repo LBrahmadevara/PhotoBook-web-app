@@ -38,7 +38,7 @@ const Upload = () => {
       }).format(selectedDate)
     );
     axios
-      .post("/upload", form_data, {
+      .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

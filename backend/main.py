@@ -5,8 +5,11 @@ from google.cloud import storage
 from google.cloud import vision
 from google.cloud import datastore
 from datetime import datetime
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 CLOUD_STORAGE_BUCKET = "robotic-charmer-291501"
 # Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
@@ -14,11 +17,12 @@ CLOUD_PROJECT = "robotic-charmer-291501"
 
 datastore_client = datastore.Client(CLOUD_PROJECT)
 
-@app.route('/')
-def main():
-    return "main"
+#@app.route('/')
+#def main():
+ #   return "main"
 
 @app.route('/upload', methods=['POST'])
+@cross_origin()
 def upload():
     uploaded_file = request.files.get('file')
     name = request.form.get('name')
@@ -137,6 +141,7 @@ def upload():
 
 
 @app.route('/all')
+@cross_origin()
 def all_categories():
     query = datastore_client.query(kind='Photo Book')
     res = list(query.fetch())
@@ -160,6 +165,7 @@ def test():
 
 
 @app.route('/edit', methods=['POST'])
+@cross_origin()
 def edit():
     id = request.get_json()['id']
     query = datastore_client.query(kind='Photo Book')
@@ -169,6 +175,7 @@ def edit():
 
 
 @app.route('/labels', methods=['POST'])
+@cross_origin()
 def categories():
     label = request.get_json()['label']
     query = datastore_client.query(kind='Photo Book')

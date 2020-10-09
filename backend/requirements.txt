@@ -1,4 +1,5 @@
 Flask==1.1.2
+flask-cors
 google-cloud-storage==1.31.2
 google-cloud-datastore==1.15.3
 google-cloud-vision==2.0.0

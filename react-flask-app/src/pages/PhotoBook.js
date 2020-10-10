@@ -15,6 +15,11 @@ const PhotoBook = () => {
 
   const fetch_api = async () => {
     await axios.get("https://robotic-charmer-291501.wl.r.appspot.com/all").then((res) => {
+      if (res.data.response.length === 0) {
+          setEmptyCheck("empty");
+        } else {
+          setEmptyCheck("not empty");
+        }
       setCategories(res.data.response);
       setLoadingState(true);
     });

@@ -13,7 +13,7 @@ import { Spinner } from "@blueprintjs/core";
 
 const FlakeIdGen = require("flake-idgen");
 const intformat = require("biguint-format");
-const id = new FlakeIdGen().next();
+//const id = new FlakeIdGen().next();
 
 const Upload = () => {
   let [file, setFile] = useState("");
@@ -22,9 +22,12 @@ const Upload = () => {
   let [loc, setLoc] = useState("");
   let [spin, setSpin] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+	//console.log(id);
   const API = () => {
+    const id = new FlakeIdGen().next();
     let form_data = new FormData();
     form_data.append("file", file);
+    console.log(intformat(id, "dec"));
     form_data.append("id", intformat(id, "dec"));
     form_data.append("name", name);
     form_data.append("loc", loc);

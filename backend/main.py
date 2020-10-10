@@ -148,22 +148,6 @@ def all_categories():
     return {'response': res}
 
 
-@app.route('/test')
-def test():
-    key = datastore_client.key('Photo Book', '5117579211309056')
-    entity = datastore.Entity(key=key)
-    entity.update({
-        'name': "nam",
-        'location': "loc",
-        'date': "date",
-        'url': 'dfasdf',
-        'category': 'animal',
-        'id': '5117579211309056'
-    })
-    datastore_client.put(entity)
-    return 'response'
-
-
 @app.route('/edit', methods=['POST'])
 @cross_origin()
 def edit():

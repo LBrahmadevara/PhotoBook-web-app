@@ -75,54 +75,9 @@ def upload():
                 break
             else:
                 category = 'Others'
-                # break
     else:
         url = old_url
         category = request.form.get('label')
-
-    # # Create a Cloud Storage client.
-    # gcs = storage.Client()
-
-    # # Get the bucket that the file will be uploaded to.
-    # bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
-
-    # # Create a new blob and upload the file's content.
-    # blob = bucket.blob(uploaded_file.filename)
-
-    # blob.upload_from_string(
-    #     uploaded_file.read(),
-    #     content_type=uploaded_file.content_type
-    # )
-
-    # # Make the blob publicly viewable.
-    # blob.make_public()
-    # # print(blob.name)
-
-    # url = blob.public_url
-
-    # Use the Cloud Vision client to detect a face for our image.
-    # source_uri = "gs://{}/{}".format(CLOUD_STORAGE_BUCKET, blob.name)
-    # image = vision.Image(source=vision.ImageSource(gcs_image_uri=source_uri))
-
-    # # Performs label detection on the image file
-    # labels = vision_client.label_detection(image=image).label_annotations
-
-    # category = ''
-    # for label in labels:
-    #     print(label.description)
-    #     if 'human' == label.description.lower():
-    #         category = 'Human'
-    #         break
-    #     elif ('dog' == label.description.lower()) or ('cat' == label.description.lower()) or ('mammal' == label.description.lower()):
-    #         category = 'Animal'
-    #         break
-    #     elif 'flower' == label.description.lower():
-    #         category = 'Flower'
-    #         break
-    #     else:
-    #         category = 'Others'
-    #         # break
-    # print(category)
 
     key = datastore_client.key('Photo Book', id)
     entity = datastore.Entity(key=key)
@@ -146,6 +101,17 @@ def all_categories():
     query = datastore_client.query(kind='Photo Book')
     res = list(query.fetch())
     return {'response': res}
+
+
+@app.route('/delete', methods=['POST'])
+@cross_origin()
+def delete():
+    id = request.get_json()['id']
+    print(id)
+    key = datastore_client.key('Photo Book', id)
+    datastore_client.delete(key)
+    # res = datastore_client.get(key)
+    return {'response': "success"}
 
 
 @app.route('/edit', methods=['POST'])

@@ -14,8 +14,21 @@
   padding-top: 0% !important;
 }
 
+.delete-content{
+  font-size: small;
+}
+
+.delete-button{
+  background-color: #c23030 !important;
+  color: white !important;
+}
+
 /* min_h : 315
 w 250 */
+
+.MuiCardActions-root{
+  justify-content: space-between;
+}
 
 .update-image{
   min-height: 315px;

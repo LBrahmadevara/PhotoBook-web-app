@@ -65,7 +65,7 @@ def upload():
         category = ''
         for label in labels:
             if 'human' == label.description.lower():
-                category = 'Human'
+                category = 'People'
                 break
             elif ('dog' == label.description.lower()) or ('cat' == label.description.lower()) or ('mammal' == label.description.lower()):
                 category = 'Animal'

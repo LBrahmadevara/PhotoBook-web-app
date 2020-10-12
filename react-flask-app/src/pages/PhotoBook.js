@@ -59,8 +59,8 @@ const PhotoBook = () => {
           </Button>
         </div>
         <div>
-          <Button value="Human" onClick={API_call} className="category-button">
-            Humans
+          <Button value="People" onClick={API_call} className="category-button">
+            People
           </Button>
         </div>
         <div>

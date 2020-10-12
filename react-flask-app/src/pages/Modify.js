@@ -137,7 +137,7 @@ const Modify = (props) => {
                 <InputLabel>Label</InputLabel>
                 <Select value={label} onChange={labelChanged}>
                   <MenuItem value="Animal">Animal</MenuItem>
-                  <MenuItem value="Human">Human</MenuItem>
+                  <MenuItem value="People">People</MenuItem>
                   <MenuItem value="Flower">Flower</MenuItem>
                   <MenuItem value="Others">Others</MenuItem>
                 </Select>

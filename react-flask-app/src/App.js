@@ -10,10 +10,10 @@ function App() {
     <div className="App">
       <Router>
         <div className="d-flex title p-3">
-          <div className="ml-3">
+          <div className="ml-4 pl-4 pr-4">
             <Link to="/">Photo Book</Link>
           </div>
-          <div className="ml-4">
+          <div className="ml-4 pl-4">
             <Link to="/upload">Upload</Link>
           </div>
         </div>

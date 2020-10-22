@@ -30,6 +30,7 @@ const PhotoCard = (props) => {
       id: props.categories.id,
     };
     axios.post("https://robotic-charmer-291501.wl.r.appspot.com/delete", body).then((res) => {
+    // axios.post("http://localhost:5000/delete", body).then((res) => {
       console.log(res.data);
       if (res.data.response === "success") {
         window.location.reload(true);

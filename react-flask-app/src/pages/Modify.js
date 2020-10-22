@@ -25,19 +25,22 @@ const Modify = (props) => {
   let [timeChanged, setTimeChanged] = useState(false);
   let [fileChanged, setFileChanged] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  let [newFile, setNewFile] = useState('');
+  let [newFile, setNewFile] = useState("");
   let [label, setLabel] = useState("");
-  let [render, setRender] = useState('');
+  let [render, setRender] = useState("");
+  let [img_name, setImg_url] = useState("");
   useEffect(() => {
     let body = {
       id: props.match.params.id,
     };
     axios.post("https://robotic-charmer-291501.wl.r.appspot.com/edit", body).then((res) => {
+    // axios.post("http://localhost:5000/edit", body).then((res) => {
       setFile(res.data.response[0]["url"]);
       setLabel(res.data.response[0]["category"]);
       setName(res.data.response[0]["name"]);
       setLoc(res.data.response[0]["location"]);
       setSelectedDate(res.data.response[0]["date"]);
+      setImg_url(res.data.response[0]["img_name"]);
       console.log(res.data.response[0]["date"]);
     });
   }, [render]);
@@ -51,11 +54,13 @@ const Modify = (props) => {
     form_data.append("id", props.match.params.id);
     if (fileChanged) {
       form_data.append("fileChanged", "true");
-      form_data.append('file', newFile);
+      form_data.append("edit", "true");
+      form_data.append("file", newFile);
     } else {
       form_data.append("fileChanged", "false");
-      form_data.append('file', file);
+      form_data.append("file", file);
     }
+    form_data.append("img_name", img_name);
     form_data.append("name", name);
     form_data.append("loc", loc);
     form_data.append("label", label);
@@ -71,15 +76,19 @@ const Modify = (props) => {
     } else {
       form_data.append("date", selectedDate);
     }
-    console.log(render)
+    console.log(render);
     axios
       .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
+    // axios
+    //   .post("http://localhost:5000/upload", form_data, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   })
       .then((res) => {
         setSpin(false);
         setMsg("Updated Succesfully");
-        setRender('render');
+        setRender("render");
       });
   };
   const labelChanged = (e) => {
@@ -160,14 +169,10 @@ const Modify = (props) => {
             </div>
           </div>
           <div className="mt-4 ml-4">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={uploadButton}
-                >
-                  Update
-                </Button>
-              </div>
+            <Button color="primary" variant="contained" onClick={uploadButton}>
+              Update
+            </Button>
+          </div>
         </form>
         <div>
           {spin ? (

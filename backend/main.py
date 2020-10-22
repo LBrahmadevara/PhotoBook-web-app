@@ -8,11 +8,11 @@ from datetime import datetime
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resources={r"/" : {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 CLOUD_STORAGE_BUCKET = "robotic-charmer-291501"
-# Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+Service_key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 CLOUD_PROJECT = "robotic-charmer-291501"
 
 datastore_client = datastore.Client(CLOUD_PROJECT)
@@ -31,6 +31,8 @@ def upload():
     id = request.form.get('id')
     file_changed = request.form.get('fileChanged')
     old_url = request.form.get('file')
+    img_name = request.form.get('img_name')
+    edit = request.form.get('edit')
 
     # Instantiates a client
     vision_client = vision.ImageAnnotatorClient()
@@ -38,6 +40,11 @@ def upload():
     if (file_changed == 'true'):
         # Create a Cloud Storage client.
         gcs = storage.Client()
+
+        if (edit == 'true'):
+            delete_bucket = gcs.bucket(CLOUD_STORAGE_BUCKET)
+            del_blob = delete_bucket.blob(img_name)
+            del_blob.delete()
 
         # Get the bucket that the file will be uploaded to.
         bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
@@ -53,8 +60,9 @@ def upload():
         # Make the blob publicly viewable.
         blob.make_public()
         # print(blob.name)
-
         url = blob.public_url
+
+        img_name = blob.name
 
         source_uri = "gs://{}/{}".format(CLOUD_STORAGE_BUCKET, blob.name)
         image = vision.Image(source=vision.ImageSource(gcs_image_uri=source_uri))
@@ -87,7 +95,8 @@ def upload():
         'date': date,
         'url': url,
         'category': category,
-        'id': id
+        'id': id,
+        'img_name': img_name
     })
 
     datastore_client.put(entity)
@@ -107,7 +116,16 @@ def all_categories():
 @cross_origin()
 def delete():
     id = request.get_json()['id']
-    print(id)
+    query = datastore_client.query(kind='Photo Book')
+    query.add_filter('id', '=', id)
+    res = list(query.fetch())
+    img_name = res[0]['img_name']
+
+    gcs = storage.Client()
+    delete_bucket = gcs.bucket(CLOUD_STORAGE_BUCKET)
+    del_blob = delete_bucket.blob(img_name)
+    del_blob.delete()
+
     key = datastore_client.key('Photo Book', id)
     datastore_client.delete(key)
     # res = datastore_client.get(key)

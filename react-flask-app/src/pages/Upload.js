@@ -22,7 +22,7 @@ const Upload = () => {
   let [loc, setLoc] = useState("");
   let [spin, setSpin] = useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-	//console.log(id);
+  //console.log(id);
   const API = () => {
     const id = new FlakeIdGen().next();
     let form_data = new FormData();
@@ -31,7 +31,8 @@ const Upload = () => {
     form_data.append("id", intformat(id, "dec"));
     form_data.append("name", name);
     form_data.append("loc", loc);
-    form_data.append('fileChanged','true');
+    form_data.append("fileChanged", "true");
+    form_data.append("edit", "false");
     form_data.append(
       "date",
       new Intl.DateTimeFormat("en-US", {
@@ -122,8 +123,11 @@ const Upload = () => {
             {/* <Button onClick={Bu}>Time</Button> */}
           </div>
         </form>
-        {spin ? <Spinner className="mt-3" size='40' intent='success' /> :
-        <div className="mt-4">{msg}</div>}
+        {spin ? (
+          <Spinner className="mt-3" size="40" intent="success" />
+        ) : (
+          <div className="mt-4">{msg}</div>
+        )}
       </div>
     </div>
   );

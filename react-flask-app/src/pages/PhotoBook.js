@@ -15,11 +15,12 @@ const PhotoBook = () => {
 
   const fetch_api = async () => {
     await axios.get("https://robotic-charmer-291501.wl.r.appspot.com/all").then((res) => {
+    // await axios.get("http://localhost:5000/all").then((res) => {
       if (res.data.response.length === 0) {
-          setEmptyCheck("empty");
-        } else {
-          setEmptyCheck("not empty");
-        }
+        setEmptyCheck("empty");
+      } else {
+        setEmptyCheck("not empty");
+      }
       setCategories(res.data.response);
       setLoadingState(true);
     });
@@ -34,6 +35,7 @@ const PhotoBook = () => {
       label: e.currentTarget.value,
     };
     axios.post("https://robotic-charmer-291501.wl.r.appspot.com/labels", body).then((res) => {
+    // axios.post("http://localhost:5000/labels", body).then((res) => {
       setCategories(res.data.response);
       if (res.data.response.length === 0) {
         setEmptyCheck("empty");

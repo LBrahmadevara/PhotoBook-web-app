@@ -33,8 +33,8 @@ const Modify = (props) => {
     let body = {
       id: props.match.params.id,
     };
-    axios.post("https://robotic-charmer-291501.wl.r.appspot.com/edit", body).then((res) => {
-    // axios.post("http://localhost:5000/edit", body).then((res) => {
+    // axios.post("https://robotic-charmer-291501.wl.r.appspot.com/edit", body).then((res) => {
+    axios.post("http://localhost:5000/edit", body).then((res) => {
       setFile(res.data.response[0]["url"]);
       setLabel(res.data.response[0]["category"]);
       setName(res.data.response[0]["name"]);
@@ -77,14 +77,14 @@ const Modify = (props) => {
       form_data.append("date", selectedDate);
     }
     console.log(render);
-    axios
-      .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
     // axios
-    //   .post("http://localhost:5000/upload", form_data, {
+    //   .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
     //     headers: { "Content-Type": "multipart/form-data" },
     //   })
+    axios
+      .post("http://localhost:5000/upload", form_data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
         setSpin(false);
         setMsg("Updated Succesfully");

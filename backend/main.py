@@ -4,6 +4,7 @@ import os
 from google.cloud import storage
 from google.cloud import vision
 from google.cloud import datastore
+import dialogflow
 from datetime import datetime
 from flask_cors import CORS, cross_origin
 

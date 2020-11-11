@@ -41,8 +41,12 @@ const Upload = () => {
         day: "2-digit",
       }).format(selectedDate)
     );
+    // axios
+    //   .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   })
     axios
-      .post("https://robotic-charmer-291501.wl.r.appspot.com/upload", form_data, {
+      .post("http://localhost:5000/upload", form_data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

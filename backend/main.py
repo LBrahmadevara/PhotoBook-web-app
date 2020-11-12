@@ -143,7 +143,7 @@ def webhook():
         response = "Uploaded file belongs to " + img_label + " category.\n"
 
         query = datastore_client.query(kind='Photo Book')
-        query.add_filter('category', '=', img_label)
+        query.add_filter('category', '=', img_label.lower())
         res = list(query.fetch())
         print(res)
         if len(res) > 0:
@@ -162,7 +162,7 @@ def webhook():
         entity.update({
             'url': img_url,
             'img_name': file_name,
-            'category': img_label
+            'category': img_label.lower()
         })
         datastore_client.put(entity)
         print("Added image to datastore")
@@ -177,6 +177,28 @@ def webhook():
             skip_comma = True
             for entry in res:
                 if not skip_comma:
+                    fulfillment_text += ", "
+                fulfillment_text += entry["category"].capitalize()
+                skip_comma = False
+            fulfillment_text = "text::You have photos in the below categories.\n{}\nWhich category would like to choose?".format(fulfillment_text)
+        else:
+            fulfillment_text = "text::You don't have any photos in your PhotoBook"
+        reply = {
+            "fulfillmentText": fulfillment_text,
+        }
+    elif data["queryResult"]["action"] == "ViewPhotos.ViewPhotos-custom":
+        category_name = data['queryResult']['queryText']
+        # category_name='dog'
+        print(category_name)
+        query = datastore_client.query(kind='Photo Book')
+        query.add_filter('category', '=', category_name.lower())
+        res = list(query.fetch())
+        print(res)
+        fulfillment_text = ""
+        if len(res) > 0:
+            skip_comma = True
+            for entry in res:
+                if not skip_comma:
                     fulfillment_text += ","
                 fulfillment_text += entry["url"]
                 skip_comma = False
@@ -186,6 +208,9 @@ def webhook():
         reply = {
             "fulfillmentText": fulfillment_text,
         }
+        # reply = {
+        #     "fulfillmentText": "text::These are the Categories",
+        # }
     else:
         reply = {
             "fulfillmentText": "text::This is not a file",
